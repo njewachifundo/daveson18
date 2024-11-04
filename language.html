@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taxi Booking System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Booking Form Container */
+        #booking-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 400px;
+        }
+
+        /* Form elements */
+        #booking-form h2 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="datetime-local"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: rgb(15, 45, 60);
+            color: #fff;
+            font-weight: bold;
+            padding: 10px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: rgb(21, 64, 87);
+        }
+
+        .cancel-btn {
+            background-color: gray;
+        }
+
+        .cancel-btn:hover {
+            background-color: darkgray;
+        }
+
+        /* Language Selector */
+        #language-select {
+            margin: 10px;
+            padding: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="header-title">Taxi Booking System</h1>
+    <select id="language-select">
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="ch">chichewa</option>
+    </select>
+
+    <!-- Booking Form -->
+    <div id="booking-form">
+        <form id="bookingForm" method="POST" action="bookingop.php">
+            <h2><span id="driver-name"></span></h2>
+            <label id="pickup-location-label" for="location">Pickup Location:</label>
+            <input type="text" id="location" placeholder="Enter your pickup location" name="pickup_location" required>
+
+            <label id="destination-label" for="destination">Destination:</label>
+            <input type="text" id="destination" placeholder="Enter your destination" name="destination" required>
+
+            <label id="booking-time-label" for="time">Pickup Date & Time:</label>
+            <input type="datetime-local" id="time" name="booking_time" required>
+
+            <label id="class-label" for="class">Taxi Class:</label>
+            <select id="class" name="class" required>
+                <option value="select">Select</option>
+                <option value="Executive">Executive</option>
+                <option value="Standard">Standard</option>
+                <option value="Economy">Economy</option>
+            </select>
+
+            <button id="confirm-button" type="submit">Confirm Booking</button>
+            <button id="cancel-button" type="button" class="cancel-btn" onclick="resetForm()">Cancel</button>
+        </form>
+    </div>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                title: "Taxi Booking System",
+                pickup_location: "Pickup Location",
+                destination: "Destination",
+                booking_time: "Pickup Date & Time",
+                taxi_class: "Taxi Class",
+                confirm_booking: "Confirm Booking",
+                cancel: "Cancel",
+            },
+            es: {
+                title: "Sistema de Reserva de Taxi",
+                pickup_location: "Ubicación de Recogida",
+                destination: "Destino",
+                booking_time: "Fecha y Hora de Recogida",
+                taxi_class: "Clase de Taxi",
+                confirm_booking: "Confirmar Reserva",
+                cancel: "Cancelar",
+            },
+            fr: {
+                title: "Système de Réservation de Taxi",
+                pickup_location: "Lieu de Prise en Charge",
+                destination: "Destination",
+                booking_time: "Date et Heure de Prise en Charge",
+                taxi_class: "Classe de Taxi",
+                confirm_booking: "Confirmer la Réservation",
+                cancel: "Annuler",
+            }
+        };
+
+        // Function to update the text based on selected language
+        function updateLanguage(language) {
+            document.title = translations[language].title;
+            document.getElementById('pickup-location-label').textContent = translations[language].pickup_location;
+            document.getElementById('destination-label').textContent = translations[language].destination;
+            document.getElementById('booking-time-label').textContent = translations[language].booking_time;
+            document.getElementById('class-label').textContent = translations[language].taxi_class;
+            document.getElementById('confirm-button').textContent = translations[language].confirm_booking;
+            document.getElementById('cancel-button').textContent = translations[language].cancel;
+        }
+
+        // Event listener for the language selector
+        document.getElementById('language-select').addEventListener('change', (event) => {
+            const selectedLanguage = event.target.value;
+            updateLanguage(selectedLanguage);
+        });
+
+        // Initialize with default language
+        updateLanguage('en');
+    </script>
+</body>
+</html>
